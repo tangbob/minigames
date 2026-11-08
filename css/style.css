@@ -1,0 +1,62 @@
+* { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; overflow: hidden; background: #0a0e14; font-family: "Microsoft YaHei", "PingFang SC", "Segoe UI", sans-serif; }
+#app, #app canvas { position: fixed; inset: 0; }
+.hidden { display: none !important; }
+
+#hud { position: fixed; inset: 0; pointer-events: none; z-index: 5; }
+#hud button { pointer-events: auto; }
+
+#topbar { position: absolute; top: 12px; right: 12px; display: flex; gap: 8px; align-items: center; }
+.hbtn {
+  background: rgba(12, 18, 28, 0.78); color: #dfe8f2; border: 1px solid rgba(120, 150, 190, 0.35);
+  border-radius: 8px; padding: 8px 12px; font-size: 13px; cursor: pointer; backdrop-filter: blur(6px);
+}
+.hbtn:hover { background: rgba(40, 60, 90, 0.85); }
+.envtag { color: #ffd98f; font-size: 13px; background: rgba(12, 18, 28, 0.78); padding: 8px 10px; border-radius: 8px; border: 1px solid rgba(120, 150, 190, 0.35); }
+
+#mission { position: absolute; top: 12px; left: 12px; padding: 10px 14px; min-width: 150px; }
+.panel { background: rgba(12, 18, 28, 0.78); border: 1px solid rgba(120, 150, 190, 0.35); border-radius: 10px; color: #dfe8f2; backdrop-filter: blur(6px); }
+#m-cp { color: #ffc832; font-weight: bold; font-size: 14px; }
+#m-time { font-size: 26px; font-weight: bold; font-variant-numeric: tabular-nums; }
+#m-dist, #m-best { font-size: 12px; color: #9fb0c5; }
+
+#toast {
+  position: absolute; top: 64px; left: 50%; transform: translateX(-50%) translateY(-8px);
+  background: rgba(12, 18, 28, 0.85); color: #ffe9b0; border: 1px solid rgba(255, 200, 50, 0.4);
+  padding: 10px 22px; border-radius: 999px; font-size: 15px; opacity: 0; transition: all 0.25s; white-space: nowrap;
+}
+#toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+#minimap { position: absolute; left: 14px; bottom: 46px; border-radius: 50%; box-shadow: 0 4px 18px rgba(0, 0, 0, 0.5); }
+#speedo { position: absolute; right: 14px; bottom: 40px; }
+#keysbar {
+  position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%);
+  color: #b9c6d8; font-size: 12px; background: rgba(12, 18, 28, 0.66); padding: 6px 16px; border-radius: 999px; white-space: nowrap;
+}
+
+#menu, .overlay {
+  position: fixed; inset: 0; z-index: 10; display: flex; align-items: center; justify-content: center;
+  background: radial-gradient(ellipse at center, rgba(8, 12, 20, 0.55), rgba(4, 6, 12, 0.88));
+}
+.menu-box {
+  background: rgba(10, 15, 24, 0.92); border: 1px solid rgba(120, 150, 190, 0.3); border-radius: 18px;
+  padding: 36px 48px; text-align: center; color: #e6edf5; max-width: 640px; box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+}
+.menu-box.small { padding: 28px 40px; min-width: 340px; }
+.menu-box h1 { margin: 0; font-size: 52px; letter-spacing: 10px; color: #ffc832; text-shadow: 0 4px 24px rgba(255, 200, 50, 0.35); }
+.menu-box h2 { margin: 0 0 14px; font-size: 28px; color: #ffc832; }
+.sub { color: #9fb0c5; letter-spacing: 4px; margin: 6px 0 18px; font-size: 14px; }
+.feat { color: #c6d2e2; font-size: 13px; line-height: 1.9; margin-bottom: 18px; }
+.colorrow { margin-bottom: 20px; color: #9fb0c5; font-size: 14px; display: flex; align-items: center; justify-content: center; gap: 8px; }
+.swatch { width: 26px; height: 26px; border-radius: 50%; border: 2px solid transparent; cursor: pointer; }
+.swatch.sel { border-color: #fff; box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.35); }
+#btn-start, .menu-box button:not(.swatch) {
+  display: block; width: 100%; margin: 8px 0; padding: 14px 20px; font-size: 19px; font-weight: bold;
+  background: linear-gradient(180deg, #ffc832, #f0a018); color: #20160a; border: none; border-radius: 12px; cursor: pointer;
+}
+#btn-start:hover, .menu-box button:not(.swatch):hover { filter: brightness(1.1); }
+.menu-box button.ghost { background: rgba(60, 75, 95, 0.6); color: #dfe8f2; font-size: 15px; font-weight: normal; }
+.controls { margin-top: 16px; color: #8fa0b5; font-size: 12.5px; line-height: 1.9; text-align: left; }
+#result-time { font-size: 46px; font-weight: bold; color: #fff; font-variant-numeric: tabular-nums; }
+#result-best { color: #9fb0c5; margin-bottom: 12px; }
+.newbest { display: none; background: #ffc832; color: #20160a; font-weight: bold; border-radius: 999px; padding: 4px 14px; margin-bottom: 8px; }
