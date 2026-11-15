@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">MINIGAMES 小游戏合集</string>
+    <string name="title_activity_main">MINIGAMES 小游戏合集</string>
+    <string name="package_name">xyz.minigames.app</string>
+    <string name="custom_url_scheme">xyz.minigames.app</string>
+</resources>

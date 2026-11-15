@@ -1,0 +1,30 @@
+{
+  "name": "minigames",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "小游戏合集: 一份 web 前端 + PC(Tauri)/安卓(Capacitor) 薄壳",
+  "scripts": {
+    "dev": "vite --port 5370 --strictPort",
+    "build": "vite build",
+    "preview": "vite preview --port 5371 --strictPort",
+    "serve": "node tools/serve-web.mjs",
+    "games": "node tools/games-index.mjs",
+    "verify": "node tools/verify.mjs",
+    "publish:web": "node tools/publish-web.mjs",
+    "publish:android": "node tools/publish-android.mjs",
+    "publish:pc": "node tools/publish-pc.mjs",
+    "bump:shell": "node tools/bump-shell-version.mjs",
+    "tauri": "tauri",
+    "cap": "cap"
+  },
+  "dependencies": {
+    "@capacitor/android": "^8.5.3",
+    "@capacitor/core": "^8.5.3"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "^8.5.3",
+    "@tauri-apps/cli": "^2.12.4",
+    "vite": "^6.0.7"
+  }
+}

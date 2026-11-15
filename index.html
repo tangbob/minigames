@@ -2,71 +2,45 @@
 <html lang="zh-CN">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0a0e14">
+<meta name="description" content="MINIGAMES 小游戏合集 · 网页 / PC / 手机三端，点卡片进去就玩">
 <title>MINIGAMES · 小游戏合集</title>
-<style>
-* { box-sizing: border-box; }
-body { margin: 0; min-height: 100vh; background: radial-gradient(ellipse at 50% -10%, #1a2436, #0a0e14 60%); color: #e6edf5; font-family: "Microsoft YaHei", "PingFang SC", "Segoe UI", sans-serif; }
-.wrap { max-width: 1000px; margin: 0 auto; padding: 48px 24px 60px; }
-h1 { margin: 0; font-size: 44px; letter-spacing: 6px; color: #ffc832; text-shadow: 0 4px 24px rgba(255,200,50,.3); }
-.sub { color: #9fb0c5; letter-spacing: 3px; margin: 8px 0 34px; font-size: 14px; }
-.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
-.card { display: block; background: rgba(16,22,34,.9); border: 1px solid rgba(120,150,190,.3); border-radius: 16px; padding: 26px 24px; text-decoration: none; color: inherit; transition: transform .15s, border-color .15s; }
-.card:hover { transform: translateY(-4px); border-color: #ffc832; }
-.card .emoji { font-size: 44px; }
-.card h2 { margin: 12px 0 2px; font-size: 22px; color: #fff; }
-.card .en { color: #ffc832; font-size: 12px; letter-spacing: 2px; }
-.card p { color: #9fb0c5; font-size: 13px; line-height: 1.8; margin: 10px 0 16px; }
-.card .play { display: inline-block; background: linear-gradient(180deg,#ffc832,#f0a018); color: #20160a; font-weight: bold; border-radius: 10px; padding: 9px 18px; font-size: 14px; }
-.card.soon { border-style: dashed; opacity: .65; }
-.card.soon .play { background: rgba(60,75,95,.6); color: #dfe8f2; }
-footer { margin-top: 40px; color: #6b7a90; font-size: 12.5px; line-height: 2; }
-code { background: rgba(120,150,190,.15); border-radius: 5px; padding: 1px 6px; color: #b9c6d8; }
-#err { color: #ff8a7a; font-size: 13px; margin-top: 14px; }
-</style>
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="icon" href="/icons/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/icons/icon-192.png">
+<link rel="stylesheet" href="/src/portal.css">
+<script src="/platform.js"></script>
 </head>
 <body>
 <div class="wrap">
-  <h1>🕹️ MINIGAMES</h1>
-  <div class="sub">小游戏合集 · 点卡片进去就玩</div>
-  <div class="grid" id="grid"></div>
-  <div id="err"></div>
+  <header>
+    <h1>🕹️ MINIGAMES</h1>
+    <div class="sub">小游戏合集 · 点卡片进去就玩</div>
+    <div class="badges">
+      <span class="badge" id="badge-platform">🌐 网页版</span>
+      <span class="badge" id="badge-version">前端版本读取中…</span>
+      <button class="badge act hidden" id="btn-install">📲 安装到桌面</button>
+    </div>
+  </header>
+
+  <main class="grid" id="grid"></main>
+  <div id="err" role="alert"></div>
+  <div class="downloads hidden" id="downloads">
+    <div class="foot-title">📥 下载客户端</div>
+    <div class="dl-row" id="dl-row"></div>
+  </div>
+
   <footer>
-    加新游戏：把游戏整个放进 <code>games/&lt;名字&gt;/</code>，并在里面写一个 <code>game.json</code>
-    （<code>{"name","en","emoji","desc","entry"}</code>），本页会自动长出卡片。<br>
-    本地游玩：双击仓库里的 <code>启动游戏.bat</code>，或访问 <code>http://127.0.0.1:8770/</code>。
+    <div class="foot-title">🎮 三端入口</div>
+    <div>网页版：<code id="foot-web">https://minigames.zhinengtai.xyz</code>（手机浏览器打开后可「添加到主屏幕」）</div>
+    <div>本机现发：<code>http://127.0.0.1:8770/</code> · 双击仓库里的 <code>启动游戏.bat</code></div>
+    <div>PC 版 / 安卓版：薄壳加载同一份前端，改前端不用重打壳（见 <code>docs/发布与更新规范.md</code>）</div>
+    <div class="foot-title">➕ 加新游戏</div>
+    <div>把游戏整个放进 <code>games/&lt;名字&gt;/</code>，里面写一个 <code>game.json</code>
+      （<code>name / en / emoji / desc / entry</code>），重新构建后本页自动长出卡片。</div>
   </footer>
 </div>
-<script>
-const grid = document.getElementById('grid');
-function card(g, dir) {
-  const a = document.createElement('a');
-  a.className = 'card';
-  a.href = 'games/' + dir + '/' + (g.entry || 'index.html');
-  a.innerHTML = `<div class="emoji">${g.emoji || '🎮'}</div><h2>${g.name || dir}</h2>
-    <div class="en">${g.en || ''}</div><p>${g.desc || ''}</p><span class="play">▶ 进入游玩</span>`;
-  grid.appendChild(a);
-}
-(async () => {
-  try {
-    const html = await (await fetch('games/')).text();
-    const dirs = [...html.matchAll(/href="([^"?\/]+\/)"/g)].map(m => m[1].replace(/\/$/, ''));
-    if (!dirs.length) throw new Error('games/ 目录为空');
-    for (const d of dirs) {
-      let meta = {};
-      try { meta = await (await fetch('games/' + d + '/game.json')).json(); } catch {}
-      card(meta, d);
-    }
-  } catch (e) {
-    document.getElementById('err').textContent = '游戏列表读取失败：' + e.message + '（可直接访问 games/ 目录）';
-  }
-  const soon = document.createElement('a');
-  soon.className = 'card soon';
-  soon.href = 'games/';
-  soon.innerHTML = `<div class="emoji">➕</div><h2>下一个小游戏</h2><div class="en">COMING SOON</div>
-    <p>把新游戏放进 games/ 目录并附 game.json，这里会自动出现新卡片。</p><span class="play">📂 查看 games/ 目录</span>`;
-  grid.appendChild(soon);
-})();
-</script>
+<script type="module" src="/src/portal.js"></script>
 </body>
 </html>

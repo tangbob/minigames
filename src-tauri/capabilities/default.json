@@ -1,0 +1,7 @@
+{
+  "$schema": "../gen/schemas/desktop-schema.json",
+  "identifier": "default",
+  "description": "主窗口基础能力。壳不向页面暴露 IPC，页面纯静态运行；这里只保留核心默认权限。",
+  "windows": ["main"],
+  "permissions": ["core:default"]
+}

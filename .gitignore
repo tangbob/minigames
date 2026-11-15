@@ -1,1 +1,31 @@
+node_modules/
+dist/
+release/
+logs/
+scratch/
+.env
+.env.*
+!.env.example
 server.log
+*.log
+
+# Tauri
+src-tauri/target/
+src-tauri/gen/schemas/
+
+# Android
+android/.gradle/
+android/build/
+android/app/build/
+android/local.properties
+android/.idea/
+*.apk
+*.aab
+*.keystore
+!debug.keystore
+
+# 系统 / 编辑器
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/

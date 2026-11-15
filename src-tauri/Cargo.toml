@@ -1,0 +1,18 @@
+[package]
+name = "minigames"
+version = "0.1.0"
+description = "MINIGAMES 小游戏合集 桌面壳"
+authors = ["tangbo"]
+edition = "2024"
+rust-version = "1.90"
+
+[lib]
+name = "minigames_lib"
+crate-type = ["staticlib", "cdylib", "rlib"]
+
+[build-dependencies]
+tauri-build = { version = "2.7.4", features = [] }
+
+[dependencies]
+tauri = { version = "2.12.5", features = [] }
+serde_json = "1.0"

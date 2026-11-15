@@ -1,0 +1,14 @@
+{
+  "appId": "xyz.minigames.app",
+  "appName": "MINIGAMES 小游戏合集",
+  "webDir": "dist",
+  "server": {
+    "androidScheme": "https",
+    "url": "https://minigames.zhinengtai.xyz",
+    "errorPath": "offline.html"
+  },
+  "android": {
+    "allowMixedContent": true,
+    "appendUserAgent": "MinigamesShell/0.1.0"
+  }
+}
